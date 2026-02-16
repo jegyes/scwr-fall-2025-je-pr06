@@ -18,7 +18,8 @@
       "function": {
         "ecommerceapp0c6985a9PostConfirmation": {
           "GROUP": "Admin"
-        }
+        },
+        "ecommercefunction": {}
       }
     }
   }
