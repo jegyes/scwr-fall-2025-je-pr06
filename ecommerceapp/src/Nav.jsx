@@ -57,7 +57,7 @@ const Nav = () => {
         checkUser(updateUser)
       }
     })
-
+    // determine current page
     const currentPage = location.pathname.split('/')[1];
     console.log('Current Page is: ', location);
     setSelectedPage(currentPage ? currentPage : 'home')
