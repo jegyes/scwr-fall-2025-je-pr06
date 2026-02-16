@@ -15,7 +15,7 @@ Amplify.configure(config)
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <Router />
     </BrowserRouter>
   </StrictMode>,
 )
