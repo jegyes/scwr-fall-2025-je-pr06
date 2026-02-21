@@ -10,5 +10,5 @@ const containerStyle = {
   width: '100vw',
   margin: '0 auto',
   padding: '1em',
-  background: '#eee'
+  // background: '#eee'
 }

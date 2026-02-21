@@ -5,7 +5,7 @@ import Admin from './Admin'
 import Home from './Home'
 import Profile from './Profile'
 
-export default function Router() {
+const Router = () => {
   
   return (
     <Routes>
@@ -17,3 +17,5 @@ export default function Router() {
     </Routes>
   )
 }
+
+export default Router

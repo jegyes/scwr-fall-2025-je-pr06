@@ -1,5 +1,5 @@
 /* src/Nav.js */
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import { Menu } from 'antd'
 import { HomeOutlined, UserOutlined, ProfileOutlined } from '@ant-design/icons'
@@ -9,7 +9,7 @@ import checkUser from './checkUser'
 const getNavLinks = (isAdmin) => {
     const navLinks = [
         {
-            key: 'Home',
+            key: 'home',
             label: (
                 <Link to="/">
                     <HomeOutlined/>
@@ -64,10 +64,10 @@ const Nav = () => {
   }, [location])    
 
   return (
-    <>
+    <div>
       <Menu items={getNavLinks(user.isAuthorized)} selectedKeys={[selectedPage]} mode="horizontal"/>
       <Outlet/>
-    </>
+    </div>
   )
 }
 

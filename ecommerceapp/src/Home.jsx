@@ -4,6 +4,7 @@ import Container from './Container'
 import { get, del } from 'aws-amplify/api'
 import { List } from 'antd'
 import checkUser from './checkUser'
+import Nav from './Nav'
 
 function Home() {
   const [state, setState] = useState({products: [], loading: true})
@@ -44,6 +45,8 @@ function Home() {
   }
   return (
     <Container>
+      This is the home page
+
       <List
         itemLayout="horizontal"
         dataSource={state.products}

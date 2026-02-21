@@ -2,16 +2,12 @@
 import  { useState } from 'react'
 import './App.css'
 import { Input, Button } from 'antd'
-
 import { post } from 'aws-amplify/api'
 import { withAuthenticator } from '@aws-amplify/ui-react'
 
-const initialState = {
-  name: '', 
-  price: ''
-}
+const initialState = {name: '', price: ''}
 
-
+// eslint-disable-next-line react-refresh/only-export-components
 function Admin() {
   const [itemInfo, updateItemInfo] = useState(initialState)
   function updateForm(e) {
@@ -46,16 +42,18 @@ function Admin() {
         style={inputStyle}
       />
       <Input
-        name='price'
+        price='price'
         onChange={updateForm}
         value={itemInfo.price}
-        style={inputStyle}
         placeholder='item price'
+        style={inputStyle}
       />
       <Button
         style={buttonStyle}
         onClick={addItem}
-      >Add Product</Button>
+      >
+        Add Product
+      </Button>
     </div>
   )
 }
