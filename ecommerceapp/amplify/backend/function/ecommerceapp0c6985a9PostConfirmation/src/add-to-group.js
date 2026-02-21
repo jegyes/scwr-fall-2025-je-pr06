@@ -11,6 +11,8 @@ const cognitoIdentityServiceProvider = new CognitoIdentityProviderClient({});
  * @type {import('@types/aws-lambda').PostConfirmationTriggerHandler}
  */
 exports.handler = async (event, _context, callback) => {
+  console.log('evaluating new user', event.request.userAttributes)
+
   let isAdmin = false
   // Update this array to include any admin emails you would like to enable
   const adminEmails = ['jegyes@madisoncollege.edu']
@@ -22,6 +24,7 @@ exports.handler = async (event, _context, callback) => {
   }
 
   if (isAdmin) {
+    console.log('user should be an admin, adding. . .')
     const groupParams = {
       UserPoolId: event.userPoolId,
       GroupName: 'Admin'
@@ -41,10 +44,12 @@ exports.handler = async (event, _context, callback) => {
     // The user is an administrator, place them in the Admin group
     try {
       await cognitoIdentityServiceProvider.send(new AdminAddUserToGroupCommand(userParams));
-      callback(null, event);
-    } catch (e) { callback(e); }
+      // callback(null, event);
+    } catch (e) { 
+      // callback(e); 
+    }
   } else {
     // If the user is in neither group, proceed with no action
-    callback(null, event)
+    // callback(null, event)
   }
 }

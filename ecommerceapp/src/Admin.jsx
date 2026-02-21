@@ -11,9 +11,9 @@ const initialState = {
   price: ''
 }
 
+
 function Admin() {
   const [itemInfo, updateItemInfo] = useState(initialState)
-
   function updateForm(e) {
     const formData = {
       ...itemInfo, [e.target.name]: e.target.value
@@ -26,7 +26,11 @@ function Admin() {
         body: { ...itemInfo, price: parseInt(itemInfo.price) }
       }
       updateItemInfo(initialState)
-      const { response } = await post('ecommerceapi', '/products', data)
+      const { response } = await post({
+        apiName: 'ecommerceapi',
+        path: '/products',
+        options: data
+      })
       console.log('item added', response)
     } catch (err) {
       console.log('error adding item...', err)
