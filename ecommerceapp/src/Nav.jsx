@@ -44,7 +44,6 @@ const getNavLinks = (isAdmin) => {
 const Nav = () => {
   const [selectedPage, setSelectedPage] = useState('home');
   const location = useLocation();
-
   const [user, updateUser] = useState({})
 
   useEffect(() => {
@@ -62,7 +61,7 @@ const Nav = () => {
     console.log('Current Page is: ', location);
     setSelectedPage(currentPage ? currentPage : 'home')
 
-  }, [location])
+  }, [location])    
 
   return (
     <>

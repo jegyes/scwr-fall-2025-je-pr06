@@ -1,5 +1,5 @@
+import React from 'react'
 import './App.css'
-
 import { withAuthenticator } from '@aws-amplify/ui-react'
 
 function Profile({signOut, user}) {
@@ -17,3 +17,5 @@ const containerStyle = {
 }
 
 export default withAuthenticator(Profile)
+
+

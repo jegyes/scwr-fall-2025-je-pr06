@@ -12,7 +12,7 @@
             return
         }
 
-        const { idToken: { payload }} = userData.tokens
+        const { accessToken: { payload }} = userData.tokens
         const isAuthorized =
             payload['cognito:groups'] &&
             payload['cognito:groups'].includes('Admin')
@@ -25,6 +25,6 @@
     } catch (error) {
         console.error('checkUser failed', error);
     }
-    }
+}
 
-    export default checkUser
+export default checkUser

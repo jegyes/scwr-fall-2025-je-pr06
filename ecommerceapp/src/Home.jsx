@@ -15,6 +15,7 @@ function Home() {
     checkUser(updateUser)
     // return () => didCancel = true
   }, [])
+  
   async function getProducts() {
     const request = await get({
       apiName: 'ecommerceapi',
