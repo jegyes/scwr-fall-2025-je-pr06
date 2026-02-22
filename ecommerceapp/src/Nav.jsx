@@ -4,6 +4,7 @@ import { Link, Outlet } from 'react-router-dom'
 import { Menu } from 'antd'
 import { HomeOutlined, UserOutlined, ProfileOutlined } from '@ant-design/icons'
 import { Hub } from 'aws-amplify/utils'
+import Container from './Container'
 import checkUser from './checkUser'
 
 const getNavLinks = (isAdmin) => {

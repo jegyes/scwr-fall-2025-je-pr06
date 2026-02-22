@@ -1,5 +1,6 @@
 /* src/checkUser.js */
     import { fetchAuthSession } from 'aws-amplify/auth'
+    import Home from './Home.jsx'
 
     async function checkUser(updateUser) {
 

@@ -17,32 +17,38 @@ function Home() {
     // return () => didCancel = true
   }, [])
   
-  async function getProducts() {
+async function getProducts() {
+  try {
     const request = await get({
-      apiName: 'ecommerceapi',
-      path: '/products'
-  });
-    const {body} = await request.response;
-    const data = await body.json()
-    console.log('data: ', data)
-    // if (didCancel) return
-    setState({
-      products: data.data.Items, loading: false
-    })
+      apiName: "ecommerceapi",
+      path: "/products",
+    });
+
+    const res = await request.response; // contains statusCode, headers, body
+    console.log("status:", res.statusCode);
+    console.log("headers:", res.headers);
+
+    const text = await res.body.text();
+    console.log("raw body:", text);
+
+    // If it's JSON, parse it
+    let data;
+    try { data = JSON.parse(text); } catch { data = text; }
+    console.log("parsed:", data);
+
+    const items =
+      data?.data?.Items ??
+      data?.Items ??
+      data?.items ??
+      data?.data ??
+      [];
+
+    setState({ products: items, loading: false });
+  } catch (err) {
+    console.log("getProducts error:", err);
+    setState({ products: [], loading: false });
   }
-  async function deleteItem(id) {
-    try {
-      const products = state.products.filter(p => p.id !== id)
-      await del({
-        apiName: 'ecommerceapi',
-        path: '/products/${id}'}
-    );
-      setState({ ...state, products })
-      console.log('successfully deleted item')
-    } catch (err) {
-      console.log('error: ', err)
-    }
-  }
+}
   return (
     <Container>
       This is the home page
