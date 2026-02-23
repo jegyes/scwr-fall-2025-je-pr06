@@ -52,7 +52,6 @@ async function getProducts() {
   return (
     <Container>
       This is the home page
-
       <List
         itemLayout="horizontal"
         dataSource={state.products}

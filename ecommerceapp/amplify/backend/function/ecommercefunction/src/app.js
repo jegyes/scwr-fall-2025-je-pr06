@@ -21,7 +21,7 @@ const bodyParser = require('body-parser')
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 
 const AWS = require('aws-sdk')
-const { v4: uuid } = require('uuid')
+const { randomUUID } = require('crypto')
 
 /* Cognito SDK */
 const cognito = new
@@ -34,7 +34,15 @@ AWS.CognitoIdentityServiceProvider({
    adding the category
 *  This will also be available in the file itself, commented out at the top
 */
-var userpoolId = process.env.AUTH.ECOMMERCEAPP0C6985A9_USERPOOLID;
+const userpoolId =
+  process.env.AUTH_ECOMMERCEAPP0C6985A9_USERPOOLID;
+
+
+
+if (!userpoolId) {
+  throw new Error("Missing env var AUTH_ECOMMERCEAPP0C6985A9_USERPOOLID");
+}
+
 
 // DynamoDB configuration
 const region = process.env.REGION
@@ -132,7 +140,8 @@ app.post('/products', async function(req, res) {
   const { event } = req.apiGateway
   try {
     await canPerformAction(event, 'Admin')
-    const input = { ...body, id: uuid() }
+    const input = { ...body, id: randomUUID
+      () }
     var params = {
       TableName: ddb_table_name,
       Item: input
