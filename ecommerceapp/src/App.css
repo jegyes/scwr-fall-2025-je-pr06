@@ -5,11 +5,13 @@
   text-align: center;
 }
 
-/* .ant-list-item-meta-content {
+.ant-list-item-meta-content {
   display: flex;
-  width: 100%;
+  width: 25%;
   gap: 1em;
-} */
+  background: wheat;
+
+}
 
 .logo {
   height: 3em;
@@ -46,3 +48,4 @@
 .read-the-docs {
   color: #888;
 }
+

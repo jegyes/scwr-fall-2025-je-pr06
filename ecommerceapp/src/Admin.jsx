@@ -42,7 +42,7 @@ function Admin() {
         style={inputStyle}
       />
       <Input
-        price='price'
+        name='price'
         onChange={updateForm}
         value={itemInfo.price}
         placeholder='item price'
