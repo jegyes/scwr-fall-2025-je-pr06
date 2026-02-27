@@ -1,13 +1,16 @@
 version: 1
 applications:
-  - appRoot: .
+  - appRoot: ecommerceapp
     frontend:
       phases:
         preBuild:
           commands:
-            - node -v
-            - npm -v
+            - pwd
+            - ls
+            - echo "---- package.json ----"
             - cat package.json
+            - echo "---- scripts ----"
+            - node -e "console.log(require('./package.json').scripts)"
             - npm ci || npm install
         build:
           commands:
