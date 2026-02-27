@@ -1,9 +1,8 @@
-/* src/Main.js */
 import { useState, useEffect } from 'react'
 import Container from './Container'
 import { get, del, post } from 'aws-amplify/api'
 import { Table, Button, Popconfirm } from "antd";
-import { LikeOutlined, HeartOutlined, FireOutlined } from '@ant-design/icons'
+// import { LikeOutlined, HeartOutlined, FireOutlined } from '@ant-design/icons'
 import checkUser from './checkUser'
 
 function Home() {
@@ -14,7 +13,6 @@ function Home() {
   useEffect(() => {
     getProducts()
     checkUser(updateUser)
-    // return () => didCancel = true
   }, [])
   
 async function getProducts() {
@@ -54,7 +52,7 @@ async function deleteItem(id) {
   try {
     await del({
       apiName: "ecommerceapi",
-      path: `/products/${id}`, // backticks matter
+      path: `/products/${id}`, 
     });
 
     // Update UI immediately
@@ -95,13 +93,11 @@ async function upvoteItem(id) {
 );
 return (
   <Container>
- 
-
     <Table
-      rowKey={(item) => item.id}                 // important: stable unique key
+      rowKey={(item) => item.id}                 
       dataSource={state.products}
       loading={state.loading}
-      pagination={false}                         // optional: remove if you want pagination
+      pagination={false}                        
       columns={[
         {
           title: "Item",
@@ -112,9 +108,8 @@ return (
           title: "Price",
           dataIndex: "price",
           key: "price",
-          render: (value) => (value ?? ""),      // optional formatting spot
+          render: (value) => (value ?? ""),      
         },
-
         {
           title: "Likes",
           key: "likes",
@@ -153,7 +148,6 @@ return (
       ]}
     />
   </Container>
-
   )
 }
 

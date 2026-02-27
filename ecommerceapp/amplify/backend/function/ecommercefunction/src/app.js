@@ -1,21 +1,14 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
-
 const AWS = require('aws-sdk')
 const { randomUUID } = require('crypto')
 
-/* Cognito SDK */
 const cognito = new
 AWS.CognitoIdentityServiceProvider({
   apiVersion: '2016-04-18'
 })
 
-/* Cognito User Pool ID
-*  This User Pool ID variable will be given to you by the CLI output after
-   adding the category
-*  This will also be available in the file itself, commented out at the top
-*/
 const userpoolId =
   process.env.AUTH_ECOMMERCEAPP0C6985A9_USERPOOLID;
 
@@ -64,7 +57,6 @@ async function canPerformAction(event, group) {
     }
   })
 }
-
   async function denyGroup(event, group) {
     if (!event.requestContext.identity.cognitoAuthenticationProvider) {
       throw new Error("not authenticated")
@@ -75,7 +67,6 @@ async function canPerformAction(event, group) {
       throw new Error(`users in ${group} cannot perform this action`)
     }
   }
-
 
 // declare a new express app
 const app = express()

@@ -1,6 +1,5 @@
 /* src/checkUser.js */
     import { fetchAuthSession } from 'aws-amplify/auth'
-    import Home from './Home.jsx'
 
     async function checkUser(updateUser) {
 
@@ -28,9 +27,9 @@
 
         updateUser({
             username: payload["cognito:username"],
-            isAuthorized: isAdmin,           // keep your existing field if you want
+            isAuthorized: isAdmin,          
             isAdmin,
-            canUpvote: !isAdmin              // signed-in non-admin
+            canUpvote: !isAdmin             
         })
 
     } catch (error) {

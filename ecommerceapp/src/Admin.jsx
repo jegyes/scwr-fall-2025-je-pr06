@@ -1,4 +1,3 @@
-/* src/Admin.js */
 import  { useState } from 'react'
 import './App.css'
 import { Input, Button } from 'antd'
@@ -7,7 +6,6 @@ import { withAuthenticator } from '@aws-amplify/ui-react'
 
 const initialState = {name: '', price: ''}
 
-// eslint-disable-next-line react-refresh/only-export-components
 function Admin() {
   const [itemInfo, updateItemInfo] = useState(initialState)
   function updateForm(e) {

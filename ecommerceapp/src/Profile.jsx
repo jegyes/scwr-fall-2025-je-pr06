@@ -1,4 +1,3 @@
-import React from 'react'
 import './App.css'
 import { withAuthenticator } from '@aws-amplify/ui-react'
 import Container from './Container.jsx'
