@@ -23,6 +23,16 @@
             isAuthorized
         })
 
+        const isAdmin =
+            payload["cognito:groups"]?.includes("Admin") ?? false
+
+        updateUser({
+            username: payload["cognito:username"],
+            isAuthorized: isAdmin,           // keep your existing field if you want
+            isAdmin,
+            canUpvote: !isAdmin              // signed-in non-admin
+        })
+
     } catch (error) {
         console.error('checkUser failed', error);
     }

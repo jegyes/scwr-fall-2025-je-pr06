@@ -8,7 +8,7 @@ function Profile({signOut, user}) {
     <Container>
       <div style={containerStyle}>
           <button onClick={signOut}>Sign Out</button>
-          <pre>{JSON.stringify(user, null, '  ')}</pre>
+          <pre className="userData">{JSON.stringify(user, null, '  ')}</pre>
       </div>
     </Container>
   );

@@ -1,21 +1,3 @@
-/*
-Copyright 2017 - 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
-    http://aws.amazon.com/apache2.0/
-or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and limitations under the License.
-*/
-
-
-/* Amplify Params - DO NOT EDIT
-	AUTH_ECOMMERCEAPP0C6985A9_USERPOOLID
-	ENV
-	REGION
-	STORAGE_PRODUCTTABLE_ARN
-	STORAGE_PRODUCTTABLE_NAME
-	STORAGE_PRODUCTTABLE_STREAMARN
-Amplify Params - DO NOT EDIT */
-
 const express = require('express')
 const bodyParser = require('body-parser')
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
@@ -37,12 +19,9 @@ AWS.CognitoIdentityServiceProvider({
 const userpoolId =
   process.env.AUTH_ECOMMERCEAPP0C6985A9_USERPOOLID;
 
-
-
 if (!userpoolId) {
   throw new Error("Missing env var AUTH_ECOMMERCEAPP0C6985A9_USERPOOLID");
 }
-
 
 // DynamoDB configuration
 const region = process.env.REGION
@@ -86,6 +65,16 @@ async function canPerformAction(event, group) {
   })
 }
 
+  async function denyGroup(event, group) {
+    if (!event.requestContext.identity.cognitoAuthenticationProvider) {
+      throw new Error("not authenticated")
+    }
+    const groupData = await getGroupsForUser(event)
+    const groupsForUser = groupData.Groups.map(g => g.GroupName)
+    if (groupsForUser.includes(group)) {
+      throw new Error(`users in ${group} cannot perform this action`)
+    }
+  }
 
 
 // declare a new express app
@@ -140,8 +129,7 @@ app.post('/products', async function(req, res) {
   const { event } = req.apiGateway
   try {
     await canPerformAction(event, 'Admin')
-    const input = { ...body, id: randomUUID
-      () }
+    const input = { ...body, id: randomUUID(), likes: 0 }
     var params = {
       TableName: ddb_table_name,
       Item: input
@@ -153,10 +141,34 @@ app.post('/products', async function(req, res) {
   }
 });
 
+app.post('/products/:id/upvote', async function (req, res) {
+  const { event } = req.apiGateway
+
+  try {
+    // guest-only: signed-in but NOT Admin
+    await denyGroup(event, 'Admin')
+
+    const params = {
+      TableName: ddb_table_name,
+      Key: { id: req.params.id },
+      UpdateExpression: "ADD likes :inc",
+      ExpressionAttributeValues: { ":inc": 1 },
+      ReturnValues: "UPDATED_NEW",
+    }
+
+    const result = await docClient.update(params).promise()
+    res.json({ success: true, likes: result.Attributes?.likes })
+  } catch (err) {
+    res.status(403).json({ error: String(err) })
+  }
+})
+
 app.post('/products/*', function(req, res) {
   // Add your code here
   res.json({success: 'post call succeed!', url: req.url, body: req.body})
 });
+
+
 
 /****************************
 * Example put method *
