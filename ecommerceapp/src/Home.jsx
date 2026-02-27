@@ -3,9 +3,8 @@ import { useState, useEffect } from 'react'
 import Container from './Container'
 import { get, del, post } from 'aws-amplify/api'
 import { Table, Button, Popconfirm } from "antd";
-import { List } from 'antd'
+import { LikeOutlined, HeartOutlined, FireOutlined } from '@ant-design/icons'
 import checkUser from './checkUser'
-import Nav from './Nav'
 
 function Home() {
   const [state, setState] = useState({products: [], loading: true})
@@ -72,32 +71,31 @@ async function deleteItem(id) {
 
 async function upvoteItem(id) {
   try {
-    const { response } = await post({
+    await post({
       apiName: "ecommerceapi",
       path: `/products/${id}/upvote`,
     });
 
-    console.log("upvote success", response);
-
-    // Option 1: refetch all products
-    getProducts();
-
-    // Option 2 (faster): update state locally instead
-    /*
     setState((s) => ({
       ...s,
       products: s.products.map((p) =>
-        p.id === id ? { ...p, likes: (p.likes ?? 0) + 1 } : p
+        p.id === id
+          ? { ...p, likes: (p.likes ?? 0) + 1 }
+          : p
       ),
     }));
-    */
+
   } catch (err) {
     console.log("error upvoting item:", err);
   }
 }
+  console.log(
+  "ids:",
+  state.products.map(p => ({ name: p.name, id: p.id }))
+);
 return (
   <Container>
-    This is the home page
+ 
 
     <Table
       rowKey={(item) => item.id}                 // important: stable unique key
@@ -123,8 +121,11 @@ return (
           render: (_, item) => (
             <Button
               type="link"
-              onClick={() => upvoteItem(item.id)}
-              disabled={user.isAuthorized}  // disables for Admin
+                onClick={() => {
+                console.log("CLICK LIKE:", { name: item.name, id: item.id });
+                upvoteItem(item.id);
+              }}
+              disabled={user.isAuthorized}
             >
               👍 {item.likes ?? 0}
             </Button>
@@ -152,6 +153,7 @@ return (
       ]}
     />
   </Container>
+
   )
 }
 
