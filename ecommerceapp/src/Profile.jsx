@@ -15,7 +15,7 @@ function Profile({signOut, user}) {
   return (
     <Container>
       <div style={containerStyle} className="profileCard">
-        <Button type="primary" danger onClick={signOut}>
+        <Button color="purple" variant="solid" default onClick={signOut}>
           Sign Out
         </Button>
         <div className="userData">
