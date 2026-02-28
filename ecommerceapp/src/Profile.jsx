@@ -3,6 +3,7 @@ import './App.css';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import Container from './Container.jsx';
 import checkUser from './checkUser';
+import { Button } from 'antd';
 
 function Profile({signOut, user}) {
   const [userInfo, setUserInfo] = useState({});
@@ -13,8 +14,10 @@ function Profile({signOut, user}) {
 
   return (
     <Container>
-      <div style={containerStyle}>
-        <button onClick={signOut}>Sign Out</button>
+      <div style={containerStyle} className="profileCard">
+        <Button type="primary" danger onClick={signOut}>
+          Sign Out
+        </Button>
         <div className="userData">
           <p>
             <strong>Greetings, {" "} 

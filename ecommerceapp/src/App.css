@@ -26,6 +26,25 @@
   padding-top: 1rem;
 }
 
+.profileCard {
+  max-width: 520px;
+  width: min(92vw, 520px);
+  margin: 16px auto;
+  padding: 16px;
+
+  background: #ffffff;   /* force readable surface */
+  color: #111111;        /* force readable text */
+
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  text-align: left;
+}
+
+.profileCard .userData {
+  margin-top: 12px;
+  color: #111111;
+}
+
 .userData {
   padding-top: 1rem;
   font-size: larger;
