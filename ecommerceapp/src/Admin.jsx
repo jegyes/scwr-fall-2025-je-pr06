@@ -17,7 +17,7 @@ function Admin() {
   async function addItem() {
     try {
       const data = {
-        body: { ...itemInfo, price: parseInt(itemInfo.price) }
+        body: { ...itemInfo, price: parseFloat(itemInfo.price) }
       }
       updateItemInfo(initialState)
       const { response } = await post({
@@ -56,7 +56,12 @@ function Admin() {
   )
 }
 
-const containerStyle = { width: 400, margin: '20px auto' }
+const containerStyle = {
+  width: '100%',
+  maxWidth: '1024px',
+  margin: '20px auto',
+  padding: '0 16px'
+}
 const inputStyle = { marginTop: 10 }
 const buttonStyle = { marginTop: 10 }
 

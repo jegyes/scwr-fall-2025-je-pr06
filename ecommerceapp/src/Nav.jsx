@@ -64,7 +64,6 @@ useEffect(() => {
   setSelectedPage(currentPage ? currentPage : 'home')
 
   return () => {
-    // some Amplify versions support Hub.remove, some don't
     try {
       Hub.remove('auth', listener)
     } catch (e) {
@@ -75,6 +74,11 @@ useEffect(() => {
 
   return (
     <div>
+      <div className="headerBar">
+        <div className="headerInner">
+          <h1 className="appTitle">The Happy AppITizer🌶️</h1>
+        </div>
+      </div>
       <Menu
         items={getNavLinks(user.isAuthorized)}
         selectedKeys={[selectedPage]}

@@ -2,13 +2,11 @@ import { useState, useEffect } from 'react'
 import Container from './Container'
 import { get, del, post } from 'aws-amplify/api'
 import { Table, Button, Popconfirm } from "antd";
-// import { LikeOutlined, HeartOutlined, FireOutlined } from '@ant-design/icons'
 import checkUser from './checkUser'
 
 function Home() {
   const [state, setState] = useState({products: [], loading: true})
   const [user, updateUser] = useState({})
-  // let didCancel = false
 
   useEffect(() => {
     getProducts()
@@ -92,62 +90,73 @@ async function upvoteItem(id) {
   state.products.map(p => ({ name: p.name, id: p.id }))
 );
 return (
-  <Container>
-    <Table
-      rowKey={(item) => item.id}                 
-      dataSource={state.products}
-      loading={state.loading}
-      pagination={false}                        
-      columns={[
-        {
-          title: "Item",
-          dataIndex: "name",
-          key: "name",
-        },
-        {
-          title: "Price",
-          dataIndex: "price",
-          key: "price",
-          render: (value) => (value ?? ""),      
-        },
-        {
-          title: "Likes",
-          key: "likes",
-          render: (_, item) => (
-            <Button
-              type="link"
-                onClick={() => {
-                console.log("CLICK LIKE:", { name: item.name, id: item.id });
-                upvoteItem(item.id);
-              }}
-              disabled={user.isAuthorized}
-            >
-              👍 {item.likes ?? 0}
-            </Button>
-          ),
-        },
-        {
-          title: "Actions",
-          key: "actions",
-          render: (_, item) =>
-            user.isAuthorized ? (
-              <Popconfirm
-                title="Delete this item?"
-                okText="Delete"
-                cancelText="Cancel"
-                onConfirm={() => deleteItem(item.id)}
+  <div>
+    <div className="menuHeader">
+      <h2>Menu</h2>
+    </div>
+    <Container>
+      <Table
+        rowKey={(item) => item.id}                 
+        dataSource={state.products}
+        loading={state.loading}
+        pagination={false}                        
+        columns={[
+          {
+            title: "Item",
+            dataIndex: "name",
+            key: "name",
+            sorter: (a, b) => (a.name ?? "").localeCompare(b.name ?? ""),
+            defaultSortOrder: "ascend",
+          },
+          {
+            title: "Price",
+            dataIndex: "price",
+            key: "price",
+            render: (value) => 
+              new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+              }).format(value),
+          },
+          {
+            title: "Customer Favorite",
+            key: "likes",
+            render: (_, item) => (
+              <Button
+                type="link"
+                  onClick={() => {
+                  console.log("CLICK LIKE:", { name: item.name, id: item.id });
+                  upvoteItem(item.id);
+                }}
+                disabled={user.isAuthorized}
               >
-                <Button danger type="link">
-                  delete
-                </Button>
-              </Popconfirm>
-            ) : (
-              <span style={{ opacity: 0.5 }}>—</span>
+                🌶️ {item.likes ?? 0}
+              </Button>
             ),
-        },
-      ]}
-    />
-  </Container>
+          },
+          {
+            title: "Actions",
+            key: "actions",
+            render: (_, item) =>
+              user.isAuthorized ? (
+                <Popconfirm
+                  title="Delete this item?"
+                  okText="Delete"
+                  cancelText="Cancel"
+                  onConfirm={() => deleteItem(item.id)}
+                >
+                  <Button danger type="link">
+                    delete
+                  </Button>
+                </Popconfirm>
+              ) : (
+                <span style={{ opacity: 0.5 }}>—</span>
+              ),
+          },
+        ]}
+      />
+    </Container>
+  </div>
   )
 }
 
