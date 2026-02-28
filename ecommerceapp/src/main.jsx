@@ -1,6 +1,5 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import ReactDOM from 'react-dom';
 import './index.css'
 import Router from './Router.jsx'
 import 'antd/dist/reset.css';
